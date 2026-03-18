@@ -1,0 +1,7 @@
+{
+  "name": "Netflix Year-End Review — Generate Screens",
+  "id": "netflix-year-end-review-gen",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma", "dev"]
+}
