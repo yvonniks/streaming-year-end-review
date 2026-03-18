@@ -235,22 +235,23 @@ function Screen2() {
       {/* Purple overlay */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(45,10,80,0.88), rgba(10,0,30,0.96))" }} />
 
-      {/* Value card — dark glass with red $540 highlight */}
-      <div className="absolute text-center" style={{ top: 148, left: 13, right: 13, borderRadius: 18, background: "rgba(60,0,20,0.82)", backdropFilter: "blur(20px)", border: "1px solid rgba(229,9,20,0.25)", padding: "24px 20px 20px" }}>
+      {/* Content text — transparent, no box */}
+      <div className="absolute text-center" style={{ top: 155, left: 20, right: 20 }}>
         <div style={{ fontSize: 28, fontWeight: 800, color: "#fff", lineHeight: "36px" }}>
           You accessed{" "}
           <span style={{ color: "#E50914" }}>$540</span>
           {" "}worth of content
         </div>
-        {/* Popcorn */}
-        <div style={{ fontSize: 40, margin: "12px 0 8px" }}>🍿</div>
-        <div style={{ fontSize: 13, fontWeight: 400, color: "rgba(200,190,210,0.85)", lineHeight: "19px" }}>
+        <div style={{ fontSize: 13, fontWeight: 400, color: "rgba(200,190,210,0.85)", lineHeight: "19px", marginTop: 10 }}>
           You've unlocked licensed and exclusive entertainment with your membership for only $24.99/month.
         </div>
       </div>
 
+      {/* Popcorn — between content and rows */}
+      <div className="absolute text-center" style={{ top: 300, left: 0, right: 0, fontSize: 52 }}>🍿</div>
+
       {/* Glassmorphism rows */}
-      <div className="absolute" style={{ top: 430, left: 16, right: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+      <div className="absolute" style={{ top: 375, left: 16, right: 16, display: "flex", flexDirection: "column", gap: 10 }}>
         {rows.map((r, i) => (
           <div key={i} style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "14px 18px", display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ fontSize: 22 }}>{r.icon}</span>
@@ -402,7 +403,7 @@ function Screen6() {
         <div style={{ fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>Hoodie – Gray</div>
       </div>
 
-      <div className="absolute" style={{ top: 562, left: 41, right: 41 }}>
+      <div className="absolute" style={{ top: 598, left: 41, right: 41 }}>
         <button style={{ width: "100%", height: 49, borderRadius: 9999, background: "#fff", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <span style={{ fontSize: 14, fontWeight: 700, color: "#000" }}>Visit Netflix Shop</span>
           {/* External link icon */}
@@ -475,16 +476,25 @@ export default function App() {
           fontFamily: "'Inter', sans-serif",
           borderRadius: 44,
           boxShadow: "0 0 0 10px #222, 0 30px 80px rgba(0,0,0,0.8)",
-          opacity: animating ? 0 : 1,
-          transform: animating ? `translateX(${dir * 30}px)` : "translateX(0)",
-          transition: "opacity 0.28s ease, transform 0.28s ease",
           cursor: "pointer",
         }}
         onClick={handleTap}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <ScreenComponent />
+        {/* Screen content — animates on transition */}
+        <div
+          style={{
+            position: "absolute", inset: 0,
+            opacity: animating ? 0 : 1,
+            transform: animating ? `translateX(${dir * 30}px)` : "translateX(0)",
+            transition: "opacity 0.28s ease, transform 0.28s ease",
+          }}
+        >
+          <ScreenComponent />
+        </div>
+
+        {/* Chrome — always static, renders on top */}
         <StatusBar />
         <NavBar />
         <ProgressBar activeIndex={current} />
