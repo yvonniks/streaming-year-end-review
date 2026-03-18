@@ -220,36 +220,48 @@ function Screen1() {
 // ── Screen 2: Content Value ───────────────────────────────────────────────────
 function Screen2() {
   const rows = [
-    { label: "Blockbuster Hits", sub: "Licensed content", value: "$210" },
-    { label: "Original Series", sub: "Exclusives you love", value: "$185" },
-    { label: "Documentaries", sub: "Award winners", value: "$145" },
+    { icon: "🎬", label: "Blockbuster Hits", sub: "Licensed content", value: "$210" },
+    { icon: "📺", label: "Original Series", sub: "Exclusives you love", value: "$185" },
+    { icon: "📋", label: "Documentaries", sub: "Award winners", value: "$145" },
   ];
   return (
     <>
-      <div className="absolute inset-0" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4, opacity: 0.4 }}>
+      {/* Poster grid — purple-tinted */}
+      <div className="absolute inset-0" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4, opacity: 0.35 }}>
         {Array(12).fill(null).map((_, i) => (
           <div key={i} style={{ backgroundImage: `url(${poster})`, backgroundSize: "cover", backgroundPosition: "center", borderRadius: 5 }} />
         ))}
       </div>
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(33,7,62,0.92), rgba(0,0,0,0.95))" }} />
+      {/* Purple overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(45,10,80,0.88), rgba(10,0,30,0.96))" }} />
 
-      <div className="absolute text-center" style={{ top: 155, left: 13, right: 13, borderRadius: 14, background: "linear-gradient(135deg, #EA2A33, #c0101a)", padding: "28px 20px 24px" }}>
-        <div style={{ fontSize: 30, fontWeight: 800, color: "#fff", lineHeight: "38px" }}>
-          You accessed<br />$540 worth of content
+      {/* Value card — dark glass with red $540 highlight */}
+      <div className="absolute text-center" style={{ top: 148, left: 13, right: 13, borderRadius: 18, background: "rgba(60,0,20,0.82)", backdropFilter: "blur(20px)", border: "1px solid rgba(229,9,20,0.25)", padding: "24px 20px 20px" }}>
+        <div style={{ fontSize: 28, fontWeight: 800, color: "#fff", lineHeight: "36px" }}>
+          You accessed{" "}
+          <span style={{ color: "#E50914" }}>$540</span>
+          {" "}worth of content
         </div>
-        <div style={{ fontSize: 14, fontWeight: 400, color: "rgba(194,193,193,0.9)", marginTop: 12, lineHeight: "20px" }}>
+        {/* Popcorn */}
+        <div style={{ fontSize: 40, margin: "12px 0 8px" }}>🍿</div>
+        <div style={{ fontSize: 13, fontWeight: 400, color: "rgba(200,190,210,0.85)", lineHeight: "19px" }}>
           You've unlocked licensed and exclusive entertainment with your membership for only $24.99/month.
         </div>
       </div>
 
-      <div className="absolute" style={{ top: 420, left: 16, right: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* Glassmorphism rows */}
+      <div className="absolute" style={{ top: 430, left: 16, right: 16, display: "flex", flexDirection: "column", gap: 10 }}>
         {rows.map((r, i) => (
-          <div key={i} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 14, padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", backdropFilter: "blur(8px)" }}>
-            <div>
+          <div key={i} style={{ background: "rgba(255,255,255,0.08)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "14px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ fontSize: 22 }}>{r.icon}</span>
+            <div style={{ flex: 1 }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>{r.label}</div>
-              <div style={{ fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{r.sub}</div>
+              <div style={{ fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.55)", marginTop: 2 }}>{r.sub}</div>
             </div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#E50914" }}>{r.value}</div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: "#E50914" }}>{r.value}</div>
+              <div style={{ fontSize: 10, fontWeight: 400, color: "rgba(255,255,255,0.4)", marginTop: 1 }}>Value</div>
+            </div>
           </div>
         ))}
       </div>
@@ -261,28 +273,43 @@ function Screen2() {
 function Screen3() {
   return (
     <>
-      <div className="absolute pointer-events-none" style={{ top: 280, left: 59, width: 256, height: 256, borderRadius: 9999, background: "rgba(229,9,20,0.2)", filter: "blur(40px)" }} />
+      <div className="absolute pointer-events-none" style={{ top: 252, left: 59, width: 256, height: 256, borderRadius: 9999, background: "rgba(229,9,20,0.25)", filter: "blur(40px)" }} />
 
       <div className="absolute text-center" style={{ top: 160, left: 20, right: 20 }}>
         <div style={{ fontSize: 32, fontWeight: 800, color: "#fff", lineHeight: "40px" }}>The Ad-Free Freedom</div>
       </div>
 
+      {/* Ring with filled dark-red circle + stopwatch icon */}
       <div className="absolute" style={{ top: 245, left: "50%", transform: "translateX(-50%)", width: 238, height: 238 }}>
         <svg width="238" height="238" viewBox="0 0 238 238">
-          <circle cx="119" cy="119" r="105" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
+          {/* Filled dark background circle */}
+          <circle cx="119" cy="119" r="107" fill="rgba(80,0,10,0.85)" />
+          {/* Gray track */}
+          <circle cx="119" cy="119" r="105" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="8" />
+          {/* Red progress arc ~70% */}
           <circle cx="119" cy="119" r="105" fill="none" stroke="#E50914" strokeWidth="8"
             strokeDasharray={`${2 * Math.PI * 105 * 0.7} ${2 * Math.PI * 105 * 0.3}`}
             strokeLinecap="round" transform="rotate(-90 119 119)" />
+          {/* Outer glow ring */}
           <circle cx="119" cy="119" r="115" fill="none" stroke="rgba(229,9,20,0.31)" strokeWidth="4" />
+          {/* Stopwatch icon */}
+          <circle cx="119" cy="80" r="16" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2" />
+          <line x1="119" y1="64" x2="119" y2="58" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" />
+          <line x1="113" y1="60" x2="119" y2="58" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" />
+          <line x1="125" y1="60" x2="119" y2="58" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" />
+          <line x1="119" y1="80" x2="119" y2="72" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="119" y1="80" x2="124" y2="77" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" />
         </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div style={{ fontSize: 48, fontWeight: 900, color: "#fff", lineHeight: 1 }}>70</div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "#A3A3A3", marginTop: 6 }}>Hours Saved</div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingTop: 30 }}>
+          <div style={{ fontSize: 52, fontWeight: 900, color: "#fff", lineHeight: 1 }}>70</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#A3A3A3", marginTop: 6 }}>Hours Saved</div>
         </div>
       </div>
 
       <div className="absolute text-center" style={{ top: 538, left: 40, right: 40 }}>
-        <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", lineHeight: "30px" }}>You skipped 430 ads this year.</div>
+        <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", lineHeight: "30px" }}>
+          You skipped <span style={{ color: "#E50914" }}>430</span> ads this year.
+        </div>
         <div style={{ fontSize: 15, fontWeight: 400, color: "#A3A3A3", marginTop: 12, lineHeight: "22px" }}>
           That's 3 full days of pure, uninterrupted entertainment you gained back.
         </div>
@@ -337,6 +364,12 @@ function Screen5() {
 
       <div className="absolute" style={{ top: 295, left: 26, right: 26, bottom: 60, borderRadius: 16, overflow: "hidden" }}>
         <img src={strangerThings} alt="Stranger Things" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        {/* HAWKINS IS CALLING overlay */}
+        <div className="absolute" style={{ top: 0, left: 0, right: 0, padding: "14px 16px", background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}>
+          <div style={{ fontSize: 10, fontWeight: 800, color: "rgba(255,255,255,0.6)", letterSpacing: 4, textTransform: "uppercase" }}>
+            Hawkins is calling
+          </div>
+        </div>
       </div>
     </>
   );
@@ -364,15 +397,19 @@ function Screen6() {
         </div>
       </div>
 
-      <div className="absolute text-center" style={{ top: 520, left: 20, right: 20 }}>
-        <div style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.9)" }}>Official Hawkins High Collection</div>
+      <div className="absolute text-center" style={{ top: 516, left: 20, right: 20 }}>
+        <div style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.9)" }}>Official Hawkins High Collection</div>
+        <div style={{ fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>Hoodie – Gray</div>
       </div>
 
-      <div className="absolute" style={{ top: 565, left: 41, right: 41 }}>
+      <div className="absolute" style={{ top: 562, left: 41, right: 41 }}>
         <button style={{ width: "100%", height: 49, borderRadius: 9999, background: "#fff", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <span style={{ fontSize: 14, fontWeight: 700, color: "#000" }}>Visit Netflix Shop</span>
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M1 5h8M6 2l3 3-3 3" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          {/* External link icon */}
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M5 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8" stroke="#000" strokeWidth="1.4" strokeLinecap="round" />
+            <path d="M8 1h4v4" stroke="#000" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M12 1L6 7" stroke="#000" strokeWidth="1.4" strokeLinecap="round" />
           </svg>
         </button>
       </div>
