@@ -58,7 +58,7 @@ function StatusBar() {
 }
 
 // ── Shared: Nav bar ───────────────────────────────────────────────────────────
-function NavBar() {
+function NavBar({ onClose }) {
   return (
     <div
       className="absolute flex items-center justify-between"
@@ -73,7 +73,9 @@ function NavBar() {
       <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, color: "#9CA3AF", textTransform: "uppercase" }}>
         Year End Review
       </span>
-      <XIcon />
+      <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex" }}>
+        <XIcon />
+      </button>
     </div>
   );
 }
@@ -415,7 +417,7 @@ function Screen6() {
         </button>
       </div>
 
-      <div className="absolute flex justify-between" style={{ top: 640, left: 40, right: 40 }}>
+      <div className="absolute flex justify-between" style={{ top: 672, left: 40, right: 40 }}>
         <button style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M3 2h10v12l-5-3-5 3V2z" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinejoin="round" />
@@ -443,6 +445,7 @@ export default function App() {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [dir, setDir] = useState(1);
+  const [showRestart, setShowRestart] = useState(false);
   const touchStartX = useRef(null);
 
   const goTo = (next) => {
@@ -450,6 +453,15 @@ export default function App() {
     setDir(next > current ? 1 : -1);
     setAnimating(true);
     setTimeout(() => { setCurrent(next); setAnimating(false); }, 280);
+  };
+
+  const handleClose = () => {
+    if (current === SCREENS.length - 1) setShowRestart(true);
+  };
+
+  const handleRestart = () => {
+    setShowRestart(false);
+    setCurrent(0);
   };
 
   const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
@@ -461,6 +473,7 @@ export default function App() {
   };
 
   const handleTap = (e) => {
+    if (showRestart) return;
     const x = e.clientX - e.currentTarget.getBoundingClientRect().left;
     goTo(current + (x > 187 ? 1 : -1));
   };
@@ -496,9 +509,37 @@ export default function App() {
 
         {/* Chrome — always static, renders on top */}
         <StatusBar />
-        <NavBar />
+        <NavBar onClose={handleClose} />
         <ProgressBar activeIndex={current} />
         <HomeBar />
+
+        {/* Restart overlay — shown when X is tapped on the last screen */}
+        {showRestart && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            style={{ background: "#000", zIndex: 50 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <NetflixN />
+            <div style={{ marginTop: 32, fontSize: 22, fontWeight: 800, color: "#fff", textAlign: "center", lineHeight: "30px" }}>
+              Thanks for watching<br />your Year in Review
+            </div>
+            <div style={{ marginTop: 10, fontSize: 14, color: "rgba(255,255,255,0.5)", textAlign: "center" }}>
+              Want to go again?
+            </div>
+            <button
+              onClick={handleRestart}
+              style={{
+                marginTop: 40, height: 49, padding: "0 40px",
+                borderRadius: 9999, background: "#E50914",
+                border: "none", cursor: "pointer",
+                fontSize: 15, fontWeight: 700, color: "#fff",
+              }}
+            >
+              ↩ Restart Prototype
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
